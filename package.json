@@ -10,12 +10,13 @@
         "build": "tsc",
         "dev": "tsx watch src/index.ts",
         "start": "node dist/index.js",
-        "reg": "npm set registry http://npm.lumigame.com"
+        "reg": "npm set registry http://npm.lumigame.com",
+        "clear": "rimraf node_modules"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@rd/pusoy-rules": "^1.0.1-beta.2",
+        "@rd/pusoy-rules": "^1.0.1-beta.3",
         "cors": "^2.8.5",
         "express": "^4.19.2",
         "mongoose": "^8.4.4",
