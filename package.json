@@ -1,7 +1,7 @@
 {
-    "name": "demo-chinese-poker-service",
+    "name": "pusoy-service-demo",
     "version": "1.0.0",
-    "description": "Demo chinese poker service on nodejs",
+    "description": "Demo pusoy service on nodejs",
     "type": "commonjs",
     "module": "dist/index.js",
     "main": "dist/index.d.ts",
@@ -15,7 +15,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@rd/pusoy-rules": "^1.0.1-beta.1",
+        "@rd/pusoy-rules": "^1.0.1-beta.2",
         "cors": "^2.8.5",
         "express": "^4.19.2",
         "mongoose": "^8.4.4",
