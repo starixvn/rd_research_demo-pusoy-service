@@ -4,6 +4,7 @@ export const defaultScoreConfig = {
         threeFlushes: 3,
         sixPairs: 6,
         dragon: 12,
+        threeStraights: 3,
     },
     crack: 6,
     pusoy: {
