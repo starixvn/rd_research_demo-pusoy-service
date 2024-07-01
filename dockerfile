@@ -1,4 +1,4 @@
-FROM hub.lumigame.com/base/node:lts-alpine as builder
+FROM hub.lumigame.com/docker-hub/library/node:lts-alpine as builder
 WORKDIR /app
 COPY package*.json /app/
 RUN npm run reg
@@ -8,9 +8,7 @@ COPY src /app/src/
 RUN npm run build
 RUN npm ci --production
 
-# FROM hub.lumigame.com/base/alpine:3.18.2
-# RUN apk add nodejs --no-cache
-FROM hub.lumigame.com/base/node:lts-alpine
+FROM hub.lumigame.com/docker-hub/library/node:lts-alpine
 WORKDIR /app
 COPY --from=builder /app/node_modules /app/node_modules
 COPY --from=builder /app/dist /app/
