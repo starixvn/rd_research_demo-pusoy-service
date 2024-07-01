@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import mongoose from "mongoose";
-import { Hand, Settler } from "@rd/pusoy-rules";
+import { Hand, createPusoyRules } from "@rd/pusoy-rules";
 import ScoreConfigModel from "./models/score-config";
 import morgan from "morgan";
 import cors from "cors";
@@ -9,6 +9,7 @@ import { defaultScoreConfig } from "./default-score-config";
 
 const app: Express = express();
 const port = appConfig.port;
+let pusoy = createPusoyRules(defaultScoreConfig);
 
 const init = async () => {
     try {
@@ -16,10 +17,9 @@ const init = async () => {
         const scoreConfig = await ScoreConfigModel.findOne({
             id: appConfig.scoreConfigId,
         }).exec();
-        Settler.configure(scoreConfig!);
+        pusoy = createPusoyRules(scoreConfig!);
     } catch (error) {
         console.log(error);
-        Settler.configure(defaultScoreConfig);
     }
 };
 
@@ -35,12 +35,12 @@ app.post(
         req: Request<{}, {}, { arrangements: Hand<number[]>[] }>,
         res: Response,
     ) => {
-        const result = Settler.settle(req.body.arrangements, [
-            true,
-            true,
-            true,
-            true,
-        ]);
+        const result = pusoy.settle(
+            req.body.arrangements.map((hand) => ({
+                hand,
+                isAlertNatural: true,
+            })),
+        );
         res.send(result);
     },
 );
