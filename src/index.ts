@@ -5,16 +5,22 @@ import ScoreConfigModel from "./models/score-config.js";
 import morgan from "morgan";
 import cors from "cors";
 import { appConfig } from "./app-config.js";
+import { defaultScoreConfig } from "./default-score-config.js";
 
 const app: Express = express();
 const port = appConfig.port;
 
 const init = async () => {
-    await mongoose.connect(appConfig.db);
-    const scoreConfig = await ScoreConfigModel.findOne({
-        id: appConfig.scoreConfigId,
-    }).exec();
-    Settler.configure(scoreConfig!);
+    try {
+        await mongoose.connect(appConfig.db);
+        const scoreConfig = await ScoreConfigModel.findOne({
+            id: appConfig.scoreConfigId,
+        }).exec();
+        Settler.configure(scoreConfig!);
+    } catch (error) {
+        console.log(error);
+        Settler.configure(defaultScoreConfig);
+    }
 };
 
 init();
