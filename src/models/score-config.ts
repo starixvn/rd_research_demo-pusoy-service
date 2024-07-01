@@ -35,6 +35,6 @@ const scoreConfigSchema = new Schema<ScoreConfig>(
     { collection: "score_config" },
 );
 
-const ScoreConfigModel = model<ScoreConfig>("score_config", scoreConfigSchema);
+const ScoreConfigModel = model<ScoreConfig>("ScoreConfig", scoreConfigSchema);
 
 export default ScoreConfigModel;

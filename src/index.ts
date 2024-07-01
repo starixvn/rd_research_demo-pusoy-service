@@ -1,11 +1,11 @@
 import express, { Express, Request, Response } from "express";
 import mongoose from "mongoose";
 import { Hand, Settler } from "@rd/pusoy-rules";
-import ScoreConfigModel from "./models/score-config.js";
+import ScoreConfigModel from "./models/score-config";
 import morgan from "morgan";
 import cors from "cors";
-import { appConfig } from "./app-config.js";
-import { defaultScoreConfig } from "./default-score-config.js";
+import appConfig from "./app-config";
+import { defaultScoreConfig } from "./default-score-config";
 
 const app: Express = express();
 const port = appConfig.port;
