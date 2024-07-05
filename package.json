@@ -16,7 +16,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@rd/pusoy-rules": "^1.0.1-beta.8",
+        "@rd/pusoy-rules": "^1.0.1-beta.10",
         "cors": "^2.8.5",
         "express": "^4.19.2",
         "mongoose": "^8.4.4",

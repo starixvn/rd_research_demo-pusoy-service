@@ -1,15 +1,33 @@
+import { Natural } from "@rd/pusoy-rules";
+
 export const defaultScoreConfig = {
+    id: 4,
     normal: 1,
-    natural: {
-        threeFlushes: 3,
-        sixPairs: 6,
-        dragon: 12,
-        threeStraights: 3,
-    },
+    natural: [
+        {
+            name: Natural.Dragon,
+            units: 12,
+        },
+        {
+            name: Natural.SixPairs,
+            units: 6,
+        },
+        {
+            name: Natural.ThreeFlushes,
+            units: 3,
+        },
+        {
+            name: Natural.ThreeStraights,
+            units: 3,
+        },
+    ],
     crack: 6,
     pusoy: {
-        partial: 3,
-        full: 6,
+        full: {
+            isWinnerTakeAll: true,
+            units: 6,
+        },
+        mini: 3,
     },
     royalty: {
         front: {
