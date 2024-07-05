@@ -6,6 +6,7 @@ import morgan from "morgan";
 import cors from "cors";
 import appConfig from "./app-config";
 import { defaultScoreConfig } from "./default-score-config";
+import { MatchModel } from "./models/match";
 
 const app: Express = express();
 const port = appConfig.port;
@@ -47,6 +48,12 @@ app.post(
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Server is running");
+});
+
+app.get("/match/:id", async (req: Request, res: Response) => {
+    const matchId = req.params.id;
+    const match = await MatchModel.findOne({ id: matchId }).exec();
+    res.send(JSON.stringify(match));
 });
 
 app.get("/config", async (req: Request, res: Response) => {
