@@ -1,4 +1,4 @@
-import { NaturalUnit, ScoreConfig } from "@rd/pusoy-rules";
+import { ScoreConfig } from "@rd/pusoy-rules";
 import { Schema, model } from "mongoose";
 
 export const fullPusoySchema = new Schema<ScoreConfig["pusoy"]["full"]>({
@@ -23,10 +23,10 @@ export const pusoySchema = new Schema<ScoreConfig["pusoy"]>({
     },
 });
 
-export const naturalSchema = new Schema<NaturalUnit>({
+export const pusoyUnitSchema = new Schema({
     name: {
         type: String,
-        required: true,
+        required: false,
     },
     units: {
         type: Number,
@@ -45,7 +45,7 @@ const scoreConfigSchema = new Schema<ScoreConfig>(
             required: true,
         },
         pusoy: pusoySchema,
-        natural: [naturalSchema],
+        natural: [pusoyUnitSchema],
         royalty: {
             type: Object,
             required: true,
