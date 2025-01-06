@@ -13,4 +13,4 @@ FROM hub.lumigame.com/docker-hub/library/node:lts-alpine
 WORKDIR /app
 COPY --from=builder /app/node_modules /app/node_modules
 COPY --from=builder /app/dist /app/
-CMD node --experimental-modules index.js
+CMD node --experimental-modules src/index.js

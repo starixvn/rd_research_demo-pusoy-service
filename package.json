@@ -2,7 +2,7 @@
     "name": "pusoy-service-demo",
     "version": "1.0.0",
     "description": "Demo pusoy service on nodejs",
-    "type": "commonjs",
+    "type": "module",
     "module": "dist/index.js",
     "main": "dist/index.d.ts",
     "scripts": {
