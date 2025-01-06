@@ -24,7 +24,7 @@ const load = (context: Context): Context => {
     app.get("/config", getScoreConfig(config));
     app.post("/report", reportFailedCase());
     app.post("/start", startGame());
-    app.post("/turns", getTurns());
+    app.post("/turn", getTurns());
     app.post("/finished", finishedGame());
     app.post("/move", botMove());
     app.post("/settle", settleGame(pusoy));
