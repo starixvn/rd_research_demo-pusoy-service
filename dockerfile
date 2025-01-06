@@ -5,6 +5,7 @@ RUN npm run reg
 RUN npm ci
 COPY tsconfig.json /app/
 COPY src /app/src/
+COPY configs /app/configs/
 RUN npm run build
 RUN npm ci --production
 

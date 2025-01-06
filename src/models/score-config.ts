@@ -1,7 +1,8 @@
 import { ScoreConfig } from "@rd/pusoy-rules";
 import { Schema, model } from "mongoose";
+import pusoyUnitSchema from "./pusoy-scores/pusoy-unit-score";
 
-export const fullPusoySchema = new Schema<ScoreConfig["pusoy"]["full"]>({
+const fullPusoySchema = new Schema<ScoreConfig["pusoy"]["full"]>({
     isWinnerTakeAll: {
         type: Boolean,
         required: true,
@@ -12,24 +13,13 @@ export const fullPusoySchema = new Schema<ScoreConfig["pusoy"]["full"]>({
     },
 });
 
-export const pusoySchema = new Schema<ScoreConfig["pusoy"]>({
+const pusoySchema = new Schema<ScoreConfig["pusoy"]>({
     mini: {
         type: Number,
         required: true,
     },
     full: {
         type: fullPusoySchema,
-        required: true,
-    },
-});
-
-export const pusoyUnitSchema = new Schema({
-    name: {
-        type: String,
-        required: false,
-    },
-    units: {
-        type: Number,
         required: true,
     },
 });

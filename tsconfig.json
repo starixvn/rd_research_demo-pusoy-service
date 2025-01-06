@@ -6,10 +6,12 @@
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "skipLibCheck": true,
-        "rootDir": "./src",
+        "rootDirs": ["./src", "./configs"],
         "outDir": "./dist",
         "declaration": true,
         "allowSyntheticDefaultImports": true,
         "allowJs": true
-    }
+    },
+    "exclude": ["node_modules", "dist"],
+    "include": ["src/**/*"]
 }
