@@ -1,6 +1,6 @@
 import morgan from "morgan";
 import { Context } from "../context";
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import promMid from "express-prometheus-middleware";
 
@@ -10,7 +10,11 @@ const load = (context: Context): Context => {
     const app = express();
 
     app.use(express.json());
-    app.use(morgan("tiny"));
+    app.use(
+        morgan("tiny", {
+            skip: (req: Request, res: Response) => req.path === "/health",
+        }),
+    );
     app.use(cors());
     app.use(
         promMid({
@@ -18,6 +22,9 @@ const load = (context: Context): Context => {
             collectDefaultMetrics: true,
         }),
     );
+    app.get("/health", (req, res) => {
+        res.send("Service is running");
+    });
 
     context.setInstance("express", app);
 

@@ -28,9 +28,6 @@ const load = (context: Context): Context => {
     app.post("/finished", finishedGame());
     app.post("/move", botMove());
     app.post("/settle", settleGame(pusoy));
-    app.get("/health", (req, res) => {
-        res.send("Service is running");
-    });
 
     return context;
 };
