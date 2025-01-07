@@ -1,3 +1,4 @@
+import { Context } from "./context";
 import {
     loadAppConfig,
     loadExpress,
@@ -7,28 +8,28 @@ import {
     runExpress,
 } from "./instances";
 
-const defaultRun = () => {};
-
-const contextMap: Record<string, { load: Function; run: Function }> = {
+const contextMap: Record<
+    string,
+    {
+        load: (context: Context) => Context | Promise<Context>;
+        run?: (context: Context) => void;
+    }
+> = {
     express: {
         load: loadExpress,
         run: runExpress,
     },
     pusoyRules: {
         load: loadPusoyRules,
-        run: defaultRun,
     },
     appConfig: {
         load: loadAppConfig,
-        run: defaultRun,
     },
     handlers: {
         load: loadHandlers,
-        run: defaultRun,
     },
     mongo: {
         load: loadMongo,
-        run: defaultRun,
     },
 };
 

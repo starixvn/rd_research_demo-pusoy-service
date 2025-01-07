@@ -17,7 +17,7 @@ const load = (context: Context): Context => {
     const app = context.getInstance<express.Application>("express");
     const pusoy = context.getInstance<{
         settle: (playerData: Hand<number[]>[]) => Settlement[];
-    }>("pusoy-rules");
+    }>("pusoyRules");
     const config = context.getInstance<AppConfig>("appConfig");
 
     app.post("/settle-game-client", settleGameClient(pusoy));

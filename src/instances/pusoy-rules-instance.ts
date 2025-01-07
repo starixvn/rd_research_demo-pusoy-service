@@ -18,7 +18,7 @@ const load = async (context: Context): Promise<Context> => {
         console.log(error);
     }
 
-    context.setInstance("pusoy-rules", pusoy);
+    context.setInstance("pusoyRules", pusoy);
 
     return context;
 };
