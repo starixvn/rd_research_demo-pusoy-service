@@ -6,7 +6,7 @@ const getTurns = () => {
         const isHaveOutput = req.body.shared.is_have_output;
         const turns = isHaveOutput.map((state) => !state);
 
-        res.json({ turns });
+        res.json(turns);
     };
 };
 
