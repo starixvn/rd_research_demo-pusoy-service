@@ -1,5 +1,5 @@
 import { Context } from "./context";
-import { contextMap, loadOrder, runOrder } from "./context-map";
+import { contextMap, loadOrder, runOrder } from "./assign-context";
 
 const ContextInstance = new Context();
 
