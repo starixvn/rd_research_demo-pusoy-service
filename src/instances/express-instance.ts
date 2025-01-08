@@ -8,8 +8,8 @@ import { AppConfig } from "../interfaces";
 
 const load = (context: Context): Context => {
     const app = express();
-
     app.use(express.json());
+
     app.use(
         morgan("tiny", {
             skip: (req: Request, res: Response) => req.path === "/health",

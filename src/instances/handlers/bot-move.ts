@@ -10,7 +10,7 @@ const botMove = () => {
             if (playerData.output !== null) {
                 const arrangement = await ArrangementModel.findOne({
                     playerId: playerData.player_id,
-                    hash: BigInt(playerData.input_hash),
+                    hash: playerData.input_hash,
                     $nor: [{ cards: null }],
                 }).exec();
 
@@ -18,7 +18,7 @@ const botMove = () => {
                 if (!arrangement) {
                     const newArrangement = await ArrangementModel.create({
                         playerId: playerData.player_id,
-                        hash: BigInt(playerData.input_hash),
+                        hash: playerData.input_hash,
                         cards: {
                             segment_1: playerData?.output?.segment_1,
                             segment_2: playerData?.output?.segment_2,

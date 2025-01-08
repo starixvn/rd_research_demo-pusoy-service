@@ -7,7 +7,7 @@ export interface AppConfig {
 }
 
 export interface IArrangement {
-    hash: bigint;
+    hash: number;
     cards: {
         segment_1: number[];
         segment_2: number[];
@@ -18,10 +18,10 @@ export interface IArrangement {
 }
 
 export interface IMatch {
-    hash_slot_1: bigint;
-    hash_slot_2: bigint;
-    hash_slot_3: bigint;
-    hash_slot_4: bigint;
+    hash_slot_1: number;
+    hash_slot_2: number;
+    hash_slot_3: number;
+    hash_slot_4: number;
     slot_1: number[];
     slot_2: number[];
     slot_3: number[];

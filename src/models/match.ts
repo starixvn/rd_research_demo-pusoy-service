@@ -4,19 +4,19 @@ import { IMatch } from "../interfaces";
 const matchSchema = new Schema<IMatch>(
     {
         hash_slot_1: {
-            type: BigInt,
+            type: Number,
             required: true,
         },
         hash_slot_2: {
-            type: BigInt,
+            type: Number,
             required: true,
         },
         hash_slot_3: {
-            type: BigInt,
+            type: Number,
             required: true,
         },
         hash_slot_4: {
-            type: BigInt,
+            type: Number,
             required: true,
         },
         slot_1: {

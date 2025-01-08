@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 import { IArrangement } from "../interfaces";
 const arrangementSchema = new Schema<IArrangement>({
     hash: {
-        type: BigInt,
+        type: Number,
         required: true,
     },
     cards: {

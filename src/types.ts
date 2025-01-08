@@ -21,10 +21,10 @@ export type PlayerPrivateState = {
 
 export type MatchModel = {
     id: string;
-    hash_slot_1?: bigint;
-    hash_slot_2?: bigint;
-    hash_slot_3?: bigint;
-    hash_slot_4?: bigint;
+    hash_slot_1?: number;
+    hash_slot_2?: number;
+    hash_slot_3?: number;
+    hash_slot_4?: number;
 };
 
 export type ShareState = {

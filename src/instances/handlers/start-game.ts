@@ -13,11 +13,11 @@ const startGame = () => {
             id: indexMatch,
         }).exec();
 
-        const hashSlotMap: Record<number, bigint> = {
-            [0]: rawMatch?.hash_slot_1 || BigInt(0),
-            [1]: rawMatch?.hash_slot_2 || BigInt(0),
-            [2]: rawMatch?.hash_slot_3 || BigInt(0),
-            [3]: rawMatch?.hash_slot_4 || BigInt(0),
+        const hashSlotMap: Record<number, number> = {
+            [0]: rawMatch?.hash_slot_1 || 0,
+            [1]: rawMatch?.hash_slot_2 || 0,
+            [2]: rawMatch?.hash_slot_3 || 0,
+            [3]: rawMatch?.hash_slot_4 || 0,
         };
 
         const slotMap: Record<number, number[]> = {
@@ -29,10 +29,10 @@ const startGame = () => {
 
         const match = {
             id: rawMatch?.id,
-            hash_slot_1: rawMatch?.hash_slot_1.toString(),
-            hash_slot_2: rawMatch?.hash_slot_2.toString(),
-            hash_slot_3: rawMatch?.hash_slot_3.toString(),
-            hash_slot_4: rawMatch?.hash_slot_4.toString(),
+            hash_slot_1: rawMatch?.hash_slot_1,
+            hash_slot_2: rawMatch?.hash_slot_2,
+            hash_slot_3: rawMatch?.hash_slot_3,
+            hash_slot_4: rawMatch?.hash_slot_4,
         };
 
         const arrangements = await Promise.all(
