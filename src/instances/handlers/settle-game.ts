@@ -15,9 +15,9 @@ const convertGameStateToSettleInput = (
     }
 
     return {
-        front: privateState.output.segment_1,
+        front: privateState.output.segment_3,
         middle: privateState.output.segment_2,
-        back: privateState.output.segment_3,
+        back: privateState.output.segment_1,
     };
 };
 
