@@ -57,7 +57,7 @@ const startGame = () => {
 
             return {
                 player_id: playerId,
-                input_hash: hashSlotMap[i].toString(),
+                input_hash: hashSlotMap[i],
                 input: slotMap[i] || [],
                 arrangement_id: arrangements[i]?._id?.toString() || "",
                 output: segmentCards,
