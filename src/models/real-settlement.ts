@@ -19,6 +19,6 @@ const realSettlementSchema = new Schema<IRealSettlement>({
 });
 
 export const RealSettlementModel = model<IRealSettlement>(
-    "real_settlement",
+    "simulation_settlement",
     realSettlementSchema,
 );
