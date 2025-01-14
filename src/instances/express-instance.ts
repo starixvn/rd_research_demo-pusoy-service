@@ -25,6 +25,17 @@ const load = (context: Context): Context => {
     app.get("/health", (req, res) => {
         res.send("Service is running");
     });
+    app.use(
+        (
+            err: Error,
+            req: Request,
+            res: Response,
+            next: express.NextFunction,
+        ) => {
+            console.error(err);
+            res.status(500).send(JSON.stringify(err));
+        },
+    );
 
     context.setInstance("express", app);
 

@@ -2,27 +2,33 @@ import { ScoreConfig } from "@rd/pusoy-rules";
 import { Schema, model } from "mongoose";
 import pusoyUnitSchema from "./pusoy-scores/pusoy-unit-score";
 
-const fullPusoySchema = new Schema<ScoreConfig["pusoy"]["full"]>({
-    isWinnerTakeAll: {
-        type: Boolean,
-        required: true,
+const fullPusoySchema = new Schema<ScoreConfig["pusoy"]["full"]>(
+    {
+        isWinnerTakeAll: {
+            type: Boolean,
+            required: true,
+        },
+        units: {
+            type: Number,
+            required: true,
+        },
     },
-    units: {
-        type: Number,
-        required: true,
-    },
-});
+    { _id: false },
+);
 
-const pusoySchema = new Schema<ScoreConfig["pusoy"]>({
-    mini: {
-        type: Number,
-        required: true,
+const pusoySchema = new Schema<ScoreConfig["pusoy"]>(
+    {
+        mini: {
+            type: Number,
+            required: true,
+        },
+        full: {
+            type: fullPusoySchema,
+            required: true,
+        },
     },
-    full: {
-        type: fullPusoySchema,
-        required: true,
-    },
-});
+    { _id: false },
+);
 
 const scoreConfigSchema = new Schema<ScoreConfig>(
     {
@@ -44,6 +50,6 @@ const scoreConfigSchema = new Schema<ScoreConfig>(
     { collection: "score_config" },
 );
 
-const ScoreConfigModel = model<ScoreConfig>("ScoreConfig", scoreConfigSchema);
+const ScoreConfigModel = model<ScoreConfig>("score_config", scoreConfigSchema);
 
 export default ScoreConfigModel;

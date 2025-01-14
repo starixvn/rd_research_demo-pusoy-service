@@ -1,15 +1,18 @@
 import { Settlement } from "@rd/pusoy-rules";
 import { Schema } from "mongoose";
 
-const pusoySchema = new Schema<Settlement["pusoy"]>({
-    mini: {
-        type: Object,
-        required: true,
+const pusoySchema = new Schema<Settlement["pusoy"]>(
+    {
+        mini: {
+            type: Object,
+            required: true,
+        },
+        full: {
+            type: Number,
+            required: true,
+        },
     },
-    full: {
-        type: Number,
-        required: true,
-    },
-});
+    { _id: false },
+);
 
 export default pusoySchema;

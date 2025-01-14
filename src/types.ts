@@ -36,3 +36,8 @@ export type GameStateModel = {
     private: PlayerPrivateState[];
     shared: ShareState;
 };
+
+export type RunSimulatorRequest = {
+    contextName: string;
+    botId: string;
+};

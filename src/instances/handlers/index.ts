@@ -6,6 +6,7 @@ import finishedGame from "./finished-game";
 import settleGame from "./settle-game";
 import getTurns from "./get-turns";
 import botMove from "./bot-move";
+import runSimulator from "./run-simulator";
 
 export {
     settleGameClient,
@@ -16,4 +17,5 @@ export {
     getTurns,
     settleGame,
     botMove,
+    runSimulator,
 };

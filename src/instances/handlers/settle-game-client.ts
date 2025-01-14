@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { Hand, Settlement } from "@rd/pusoy-rules";
+import { IPusoyRules } from "../../interfaces";
 
-const settleGameClient = (pusoy: {
-    settle: (playerData: Hand<number[]>[]) => Settlement[];
-}) => {
+const settleGameClient = (pusoy: IPusoyRules) => {
     return (
         req: Request<{}, {}, { arrangements: Hand<number[]>[] }>,
         res: Response,

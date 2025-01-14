@@ -8,6 +8,7 @@ import {
     getScoreConfig,
     getTurns,
     reportFailedCase,
+    runSimulator,
     settleGame,
     settleGameClient,
     startGame,
@@ -28,6 +29,7 @@ const load = (context: Context): Context => {
     app.post("/finished", finishedGame());
     app.post("/move", botMove());
     app.post("/settle", settleGame(pusoy));
+    app.post("/run-simulator", runSimulator(pusoy));
 
     return context;
 };

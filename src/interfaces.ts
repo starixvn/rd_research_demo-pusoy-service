@@ -1,4 +1,4 @@
-import { Settlement } from "@rd/pusoy-rules";
+import { Hand, Settlement } from "@rd/pusoy-rules";
 
 export interface AppConfig {
     scoreConfigId: number;
@@ -34,4 +34,45 @@ export interface ISettlementSimulation {
     player_ids: string[];
     arrangement_ids: string[];
     scores: Settlement[];
+}
+
+export interface IRealMatch {
+    inputs: number[][];
+    hashSlots: number[];
+    syncId: string;
+}
+
+export interface IContext {
+    playerIds: string[];
+    matchId: string;
+    name: string;
+    hashSlots: number[];
+}
+
+export interface IBot {
+    type: number;
+    botUrl: string;
+}
+
+export interface IRealArrangement {
+    hashSlot: number;
+    output: Hand<number[]>;
+    playerId: string;
+}
+
+export interface IRealSettlement {
+    matchId: string;
+    playerIds: string[];
+    arrangementIds: string[];
+    scores: Settlement[];
+    hashSlot: number[];
+    simulationId?: string;
+    ref: {
+        contextId: string;
+        botId: string;
+    };
+}
+
+export interface IPusoyRules {
+    settle: (input: Hand<number[]>[]) => Settlement[];
 }
