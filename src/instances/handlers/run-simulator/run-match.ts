@@ -11,7 +11,9 @@ export const runMatch = async (
     botUrl: string,
     settle: (hands: Hand<number[]>[]) => Settlement[],
 ) => {
-    const realMatch = await RealMatchesModel.findById(context.matchId).exec();
+    const realMatch = await RealMatchesModel.findOne({
+        syncId: context.matchId,
+    }).exec();
 
     if (!realMatch) {
         throw new Error("Match not found");

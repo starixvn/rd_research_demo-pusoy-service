@@ -5,6 +5,7 @@ import { SimulationContextModel } from "../../../models/simulation-context";
 import { BotModel } from "../../../models/bot";
 import { runMatch } from "./run-match";
 import { SimulationRequestModel } from "../../../models/simulation-request";
+import { RealSettlementModel } from "../../../models/real-settlement";
 
 const runSimulator = (pusoyRules: IPusoyRules) => {
     return async (req: Request<{}, {}, RunSimulatorRequest>, res: Response) => {
@@ -13,6 +14,18 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
         const context = await SimulationContextModel.find({
             name: contextName,
         });
+
+        const contextIds = context.map((ctx) => ctx._id.toString());
+
+        const settlement = await RealSettlementModel.find({
+            "ref.contextId": { $in: contextIds },
+            "ref.botId": botId,
+        }).exec();
+
+        const filterContext = context.filter(
+            (ctx) =>
+                !settlement.some((s) => s.ref.contextId === ctx._id.toString()),
+        );
 
         let simulationRequest = await SimulationRequestModel.findOne({
             contextName,
@@ -51,11 +64,15 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
         }
 
         Promise.all(
-            context.map(async (ctx) => {
-                await runMatch(ctx, botId, bot.botUrl, pusoyRules.settle);
-                await simulationRequest.updateOne({
-                    $inc: { processed: 1 },
-                });
+            filterContext.map(async (ctx) => {
+                try {
+                    await runMatch(ctx, botId, bot.botUrl, pusoyRules.settle);
+                    await simulationRequest.updateOne({
+                        $inc: { processed: 1 },
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
             }),
         );
 
