@@ -12,7 +12,7 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
         req: Request<
             {},
             {},
-            RunSimulatorRequest & { chunkSize?: number; timeDelay: number }
+            RunSimulatorRequest & { chunkSize: number; timeDelay: number }
         >,
         res: Response,
     ) => {
@@ -78,15 +78,10 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
             processed: simulationRequest.processed,
         });
 
-        let currentChunkSize = chunkSize || 3;
         (async () => {
             try {
-                for (
-                    let i = 0;
-                    i < filterContext.length;
-                    i += currentChunkSize
-                ) {
-                    const chunk = filterContext.slice(i, i + currentChunkSize);
+                for (let i = 0; i < filterContext.length; i += chunkSize) {
+                    const chunk = filterContext.slice(i, i + chunkSize);
                     await Promise.all(
                         chunk.map(async (ctx) => {
                             try {
@@ -106,6 +101,13 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
                             }
                         }),
                     );
+
+                    // Add delay between chunks to prevent system overload
+                    if (timeDelay) {
+                        await new Promise((resolve) =>
+                            setTimeout(resolve, timeDelay),
+                        );
+                    }
                 }
             } catch (error) {
                 console.error("Simulation processing error:", error);
