@@ -29,9 +29,12 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
             "ref.botId": botId,
         }).exec();
 
+        const settledContextIds = new Set(
+            settlement.map((s) => s.ref.contextId),
+        );
+
         const filterContext = context.filter(
-            (ctx) =>
-                !settlement.some((s) => s.ref.contextId === ctx._id.toString()),
+            (ctx) => !settledContextIds.has(ctx._id.toString()),
         );
 
         let simulationRequest = await SimulationRequestModel.findOne({
