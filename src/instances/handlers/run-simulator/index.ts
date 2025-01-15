@@ -12,7 +12,7 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
         req: Request<
             {},
             {},
-            RunSimulatorRequest & { chunkSize: number; timeDelay: number }
+            RunSimulatorRequest & { chunkSize?: number; timeDelay: number }
         >,
         res: Response,
     ) => {
@@ -70,17 +70,26 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
             throw new Error("Bot not found");
         }
 
-        try {
-            // Process matches in chunks to avoid overwhelming the system
-            setTimeout(() => {
-                for (let i = 0; i < filterContext.length; i += chunkSize) {
-                    const chunk = filterContext.slice(i, i + chunkSize);
-                    Promise.all(
+        // Send immediate response
+        res.send({
+            message: "Simulation started",
+            requestId: simulationRequest._id,
+            total: simulationRequest.sum,
+            processed: simulationRequest.processed,
+        });
+
+        let currentChunkSize = chunkSize || 3;
+        (async () => {
+            try {
+                for (
+                    let i = 0;
+                    i < filterContext.length;
+                    i += currentChunkSize
+                ) {
+                    const chunk = filterContext.slice(i, i + currentChunkSize);
+                    await Promise.all(
                         chunk.map(async (ctx) => {
                             try {
-                                await new Promise((resolve) =>
-                                    setTimeout(resolve, i * timeDelay),
-                                );
                                 await runMatch(
                                     ctx,
                                     botId,
@@ -98,18 +107,10 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
                         }),
                     );
                 }
-            }, 0);
-            res.send({
-                message: "All matches processed successfully",
-                processed: simulationRequest.processed,
-                total: simulationRequest.sum,
-            });
-        } catch (error) {
-            res.status(500).send({
-                message: "Error processing matches",
-                error: error,
-            });
-        }
+            } catch (error) {
+                console.error("Simulation processing error:", error);
+            }
+        })();
     };
 };
 
