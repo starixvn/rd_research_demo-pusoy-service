@@ -12,6 +12,7 @@ import {
     settleGame,
     settleGameClient,
     startGame,
+    testBot,
 } from "./handlers";
 
 const load = (context: Context): Context => {
@@ -30,6 +31,7 @@ const load = (context: Context): Context => {
     app.post("/move", botMove());
     app.post("/settle", settleGame(pusoy));
     app.post("/run-simulator", runSimulator(pusoy));
+    app.post("/test-bot", testBot());
 
     return context;
 };
