@@ -5,7 +5,6 @@ import { SimulationContextModel } from "../../../models/simulation-context";
 import { BotModel } from "../../../models/bot";
 import { runMatch } from "./run-match";
 import { SimulationRequestModel } from "../../../models/simulation-request";
-import { RealSettlementModel } from "../../../models/real-settlement";
 
 const runSimulator = (pusoyRules: IPusoyRules) => {
     return async (
@@ -18,35 +17,44 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
     ) => {
         const { contextName, botId, chunkSize, timeDelay } = req.body;
 
-        const context = await SimulationContextModel.find({
-            name: contextName,
-        });
-
-        const contextIds = context.map((ctx) => ctx._id.toString());
-
-        const settlement = await RealSettlementModel.find({
-            "ref.contextId": { $in: contextIds },
-            "ref.botId": botId,
-        }).exec();
-
-        const settledContextIds = new Set(
-            settlement.map((s) => s.ref.contextId),
-        );
-
-        const filterContext = context.filter(
-            (ctx) => !settledContextIds.has(ctx._id.toString()),
-        );
+        const filterContext = await SimulationContextModel.aggregate([
+            {
+                $addFields: {
+                    id: {
+                        $toString: "$_id",
+                    },
+                },
+            },
+            {
+                $lookup: {
+                    from: "simulation_settlements",
+                    localField: "id",
+                    foreignField: "ref.contextId",
+                    as: "settlement",
+                    pipeline: [
+                        {
+                            $match: {
+                                "ref.botId": botId,
+                            },
+                        },
+                    ],
+                },
+            },
+            {
+                $match: {
+                    settlement: {
+                        $eq: [],
+                    },
+                },
+            },
+        ]).exec();
 
         let simulationRequest = await SimulationRequestModel.findOne({
             contextName,
             botId,
         }).exec();
 
-        if (
-            simulationRequest &&
-            simulationRequest.processed === simulationRequest.sum &&
-            simulationRequest.sum === context.length
-        ) {
+        if (filterContext.length === 0) {
             res.send({
                 message: "Simulation request already processed",
             });
@@ -57,14 +65,9 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
             simulationRequest = await SimulationRequestModel.create({
                 contextName,
                 botId,
-                sum: context.length,
+                sum: filterContext.length,
                 processed: 0,
             });
-        }
-
-        if (simulationRequest.sum < context.length) {
-            simulationRequest.sum = context.length;
-            await simulationRequest.save();
         }
 
         const bot = await BotModel.findById(botId);
