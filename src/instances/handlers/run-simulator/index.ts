@@ -80,8 +80,7 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
         res.send({
             message: "Simulation started",
             requestId: simulationRequest._id,
-            total: simulationRequest.sum,
-            processed: simulationRequest.processed,
+            remain: filterContext.length,
         });
 
         (async () => {
