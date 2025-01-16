@@ -45,6 +45,7 @@ const runSimulator = (pusoyRules: IPusoyRules) => {
                     settlement: {
                         $eq: [],
                     },
+                    name: contextName,
                 },
             },
         ]).exec();
